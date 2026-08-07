@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" x-data="enterpriseLayout()">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}AI Resume Analyzer - Enterprise SaaS Platform{% endblock %}</title>
+  <meta name="description" content="Enterprise AI Resume Analyzer. Precision ATS scoring, job description matching, and candidate evaluation dashboard.">
+  
+  <!-- Tailwind CSS CDN v3 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#EFF6FF',
+              100: '#DBEAFE',
+              500: '#3B82F6',
+              600: '#2563EB',
+              700: '#1D4ED8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Custom Enterprise CSS -->
+  <link rel="stylesheet" href="/static/css/styles.css">
+  
+  <!-- Google Fonts (Inter & Manrope) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Alpine.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="/static/js/app.js"></script>
+  <script src="/static/js/charts.js"></script>
+</head>
+<body class="bg-[#0F172A] text-slate-100 min-h-screen flex flex-col selection:bg-blue-600 selection:text-white transition-colors duration-200">
+
+  <!-- Toast Notification Overlay -->
+  {% include 'components/toast.html' %}
+
+  <!-- Left Sidebar (Logged In Layout) -->
+  {% if user %}
+    {% include 'components/sidebar.html' %}
+  {% endif %}
+
+  <!-- Main Workspace Wrapper -->
+  <div class="flex-1 flex flex-col transition-all duration-200"
+       :class="{'lg:ml-64': sidebarOpen && {{ 'true' if user else 'false' }}}">
+    
+    <!-- Top Header Bar -->
+    {% include 'components/navbar.html' %}
+
+    <!-- Main Content Area -->
+    <main class="flex-grow p-4 sm:p-6 lg:p-8 max-w-[1750px] w-full mx-auto">
+      {% block content %}{% endblock %}
+    </main>
+
+    <!-- Enterprise Compact Footer -->
+    {% include 'components/footer.html' %}
+  </div>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,314 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Enterprise Dashboard - AI Resume Analyzer{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+  
+  <!-- Header Title & Quick Action Toolbar -->
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-800">
+    <div>
+      <h1 class="text-2xl font-bold text-white tracking-tight">Executive Dashboard</h1>
+      <p class="text-xs text-slate-400 mt-0.5">Real-time candidate evaluation metrics, ATS compatibility index, and job match analytics.</p>
+    </div>
+    
+    <div class="flex items-center space-x-3">
+      <a href="/upload" class="btn-primary px-4 py-2 text-xs flex items-center space-x-2 shadow-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        <span>Upload Resume</span>
+      </a>
+      <a href="/job-match" class="btn-secondary px-4 py-2 text-xs flex items-center space-x-2">
+        <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        <span>Job Matcher</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Top Row: 6 Statistic Cards with Mini Sparklines -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+    
+    <!-- Card 1: ATS Score -->
+    <div class="ent-card p-4 flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between text-slate-400 mb-2">
+          <span class="text-xs font-semibold uppercase tracking-wider">ATS Score</span>
+          <div class="p-1 rounded bg-blue-500/10 text-blue-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+        </div>
+        <div class="flex items-baseline space-x-2">
+          <span class="text-2xl font-bold text-white">{{ stats.avg_ats }}</span>
+          <span class="text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">+4.2%</span>
+        </div>
+      </div>
+      <div class="h-8 mt-3">
+        <canvas id="sparkline1"></canvas>
+      </div>
+    </div>
+
+    <!-- Card 2: Resume Score -->
+    <div class="ent-card p-4 flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between text-slate-400 mb-2">
+          <span class="text-xs font-semibold uppercase tracking-wider">Resume Score</span>
+          <div class="p-1 rounded bg-emerald-500/10 text-emerald-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          </div>
+        </div>
+        <div class="flex items-baseline space-x-2">
+          <span class="text-2xl font-bold text-white">{{ stats.avg_formatting }}%</span>
+          <span class="text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">+2.1%</span>
+        </div>
+      </div>
+      <div class="h-8 mt-3">
+        <canvas id="sparkline2"></canvas>
+      </div>
+    </div>
+
+    <!-- Card 3: Job Match -->
+    <div class="ent-card p-4 flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between text-slate-400 mb-2">
+          <span class="text-xs font-semibold uppercase tracking-wider">Job Match</span>
+          <div class="p-1 rounded bg-purple-500/10 text-purple-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+        </div>
+        <div class="flex items-baseline space-x-2">
+          <span class="text-2xl font-bold text-white">{{ stats.avg_overall }}%</span>
+          <span class="text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">+8.5%</span>
+        </div>
+      </div>
+      <div class="h-8 mt-3">
+        <canvas id="sparkline3"></canvas>
+      </div>
+    </div>
+
+    <!-- Card 4: Uploaded Resumes -->
+    <div class="ent-card p-4 flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between text-slate-400 mb-2">
+          <span class="text-xs font-semibold uppercase tracking-wider">Resumes</span>
+          <div class="p-1 rounded bg-amber-500/10 text-amber-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+          </div>
+        </div>
+        <div class="flex items-baseline space-x-2">
+          <span class="text-2xl font-bold text-white">{{ stats.total_resumes }}</span>
+          <span class="text-xs font-semibold text-slate-400">Active</span>
+        </div>
+      </div>
+      <div class="h-8 mt-3">
+        <canvas id="sparkline4"></canvas>
+      </div>
+    </div>
+
+    <!-- Card 5: Reports Generated -->
+    <div class="ent-card p-4 flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between text-slate-400 mb-2">
+          <span class="text-xs font-semibold uppercase tracking-wider">Reports</span>
+          <div class="p-1 rounded bg-cyan-500/10 text-cyan-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          </div>
+        </div>
+        <div class="flex items-baseline space-x-2">
+          <span class="text-2xl font-bold text-white">{{ stats.total_analyses }}</span>
+          <span class="text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">PDF/CSV</span>
+        </div>
+      </div>
+      <div class="h-8 mt-3">
+        <canvas id="sparkline5"></canvas>
+      </div>
+    </div>
+
+    <!-- Card 6: Account Status -->
+    <div class="ent-card p-4 flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between text-slate-400 mb-2">
+          <span class="text-xs font-semibold uppercase tracking-wider">Account</span>
+          <div class="p-1 rounded bg-emerald-500/10 text-emerald-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+        </div>
+        <div class="flex items-baseline space-x-2">
+          <span class="text-lg font-bold text-emerald-400 flex items-center">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 mr-1.5"></span> Enterprise
+          </span>
+        </div>
+      </div>
+      <div class="text-[11px] text-slate-400 mt-3 pt-2 border-t border-slate-800">
+        Unlimited API Access
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Second Row: Analytics Charts (Left: Score Breakdown, Right: Job Match Line Chart) -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+    
+    <!-- Left: Resume Score Breakdown (Horizontal Bar & Radar) -->
+    <div class="lg:col-span-6 ent-card p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider">Resume Score Breakdown</h3>
+          <p class="text-xs text-slate-400">Category score distribution across candidate profile.</p>
+        </div>
+        <span class="text-xs font-medium text-slate-400 bg-slate-800 px-2 py-1 rounded">7 Categories</span>
+      </div>
+      <div class="h-64 relative">
+        <canvas id="scoreHorizontalBarChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Right: Job Match Analytics (Line Chart) -->
+    <div class="lg:col-span-6 ent-card p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider">Job Match & ATS Trends</h3>
+          <p class="text-xs text-slate-400">Historical performance progression over recent audits.</p>
+        </div>
+        <span class="text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded">High Accuracy</span>
+      </div>
+      <div class="h-64 relative">
+        <canvas id="jobMatchLineChart"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Third Row: 4 Data Sections (Recent Analyses, Recent Uploads, Recent Reports, Activity Timeline) -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+    
+    <!-- Recent Analyses Table (Col 6) -->
+    <div class="lg:col-span-6 ent-card p-5">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-white">Recent Analyses</h3>
+        <a href="/history" class="text-xs text-blue-500 font-semibold hover:underline">View All &rarr;</a>
+      </div>
+
+      {% if recent_analyses %}
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="text-slate-400 bg-slate-950/80 uppercase text-[10px] border-b border-slate-800">
+              <tr>
+                <th class="px-3 py-2.5">Target Position</th>
+                <th class="px-3 py-2.5">ATS</th>
+                <th class="px-3 py-2.5">Overall</th>
+                <th class="px-3 py-2.5 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800 text-slate-300">
+              {% for a in recent_analyses %}
+                <tr class="hover:bg-slate-800/40">
+                  <td class="px-3 py-2.5 font-medium text-white">{{ a.job_title or 'General Audit' }}</td>
+                  <td class="px-3 py-2.5">
+                    <span class="px-2 py-0.5 rounded font-bold text-[11px] {% if a.ats_score >= 80 %}bg-emerald-500/10 text-emerald-400{% else %}bg-amber-500/10 text-amber-400{% endif %}">
+                      {{ a.ats_score }}
+                    </span>
+                  </td>
+                  <td class="px-3 py-2.5 font-semibold text-white">{{ a.overall_score }}%</td>
+                  <td class="px-3 py-2.5 text-right">
+                    <a href="/analysis/{{ a.id }}" class="text-blue-400 font-semibold hover:underline">View</a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="text-center py-8 text-xs text-slate-400">No analyses run yet.</div>
+      {% endif %}
+    </div>
+
+    <!-- Recent Uploads (Col 3) -->
+    <div class="lg:col-span-3 ent-card p-5">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-white">Recent Uploads</h3>
+        <a href="/upload" class="text-xs text-blue-500 font-semibold hover:underline">+ Upload</a>
+      </div>
+
+      {% if resumes %}
+        <div class="space-y-2.5">
+          {% for r in resumes[:4] %}
+            <div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/60 border border-slate-800">
+              <div class="flex items-center space-x-2.5 truncate">
+                <div class="p-1.5 rounded bg-blue-500/10 text-blue-400">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                </div>
+                <div class="truncate">
+                  <div class="text-xs font-medium text-white truncate">{{ r.filename }}</div>
+                  <div class="text-[10px] text-slate-500">{{ (r.file_size / 1024)|round|int }} KB</div>
+                </div>
+              </div>
+              <span class="text-[10px] font-mono text-slate-400">{{ r.file_type.upper() }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="text-center py-8 text-xs text-slate-400">No documents uploaded.</div>
+      {% endif %}
+    </div>
+
+    <!-- Recent Reports & Activity Timeline (Col 3) -->
+    <div class="lg:col-span-3 ent-card p-5 space-y-4">
+      <div>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-white mb-3">Activity Timeline</h3>
+        <div class="space-y-3 text-xs">
+          <div class="flex items-start space-x-2.5">
+            <span class="w-2 h-2 rounded-full bg-blue-500 mt-1"></span>
+            <div>
+              <div class="text-slate-200 font-medium">ATS Audit Run Completed</div>
+              <div class="text-[10px] text-slate-500">Just now</div>
+            </div>
+          </div>
+          <div class="flex items-start space-x-2.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 mt-1"></span>
+            <div>
+              <div class="text-slate-200 font-medium">Resume File Uploaded</div>
+              <div class="text-[10px] text-slate-500">10 mins ago</div>
+            </div>
+          </div>
+          <div class="flex items-start space-x-2.5">
+            <span class="w-2 h-2 rounded-full bg-purple-500 mt-1"></span>
+            <div>
+              <div class="text-slate-200 font-medium">PDF Report Exported</div>
+              <div class="text-[10px] text-slate-500">1 hour ago</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // 6 Mini Sparkline Charts
+    initSparklineChart('sparkline1', [60, 65, 70, 78, 85, 92], '#2563EB');
+    initSparklineChart('sparkline2', [70, 72, 75, 80, 84, 88], '#16A34A');
+    initSparklineChart('sparkline3', [50, 58, 65, 75, 82, 86], '#8B5CF6');
+    initSparklineChart('sparkline4', [1, 2, 2, 3, 4, 5], '#F59E0B');
+    initSparklineChart('sparkline5', [2, 4, 5, 8, 10, 12], '#06B6D4');
+    initSparklineChart('sparkline6', [100, 100, 100, 100, 100, 100], '#10B981');
+
+    // Main Analytics Charts
+    initScoreHorizontalBar('scoreHorizontalBarChart', {
+      formatting: {{ stats.avg_formatting or 85 }},
+      readability: {{ stats.avg_ats or 80 }},
+      keyword: {{ stats.avg_keyword or 75 }},
+      skill: {{ stats.avg_overall or 90 }},
+      experience: 85,
+      education: 95,
+      project: 80
+    });
+
+    initJobMatchLineChart('jobMatchLineChart');
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Sign In - ResumeAI Enterprise{% endblock %}
+
+{% block content %}
+<div class="min-h-[75vh] flex items-center justify-center py-8">
+  <div class="max-w-md w-full ent-card p-8 space-y-6"
+       x-data="{ email: '', password: '', loading: false, error: '' }">
+    
+    <div class="text-center">
+      <div class="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold mx-auto mb-3">
+        AI
+      </div>
+      <h2 class="text-xl font-bold text-white tracking-tight">Sign in to ResumeAI</h2>
+      <p class="text-xs text-slate-400 mt-1">Enter your account credentials to access your dashboard</p>
+    </div>
+
+    <!-- Error Alert -->
+    <template x-if="error">
+      <div class="p-2.5 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs font-medium" x-text="error"></div>
+    </template>
+
+    <form class="space-y-4" @submit.prevent="
+      loading = true;
+      error = '';
+      fetch('/api/v1/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      })
+      .then(async res => {
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || 'Login failed');
+        Alpine.store('toast').show('Signed in successfully!', 'success');
+        window.location.href = '/dashboard';
+      })
+      .catch(err => {
+        loading = false;
+        error = err.message;
+        Alpine.store('toast').show(err.message, 'error');
+      });
+    ">
+      <div>
+        <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1">Email Address</label>
+        <input type="email" x-model="email" required placeholder="user@example.com"
+               class="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-600">
+      </div>
+
+      <div>
+        <div class="flex justify-between items-center mb-1">
+          <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-400">Password</label>
+          <a href="/forgot-password" class="text-[11px] text-blue-400 hover:underline">Forgot?</a>
+        </div>
+        <input type="password" x-model="password" required placeholder="••••••••"
+               class="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-600">
+      </div>
+
+      <button type="submit" :disabled="loading" class="btn-primary w-full py-2.5 text-xs flex items-center justify-center">
+        <span x-show="!loading">Sign In</span>
+        <span x-show="loading" class="inline-flex items-center">
+          <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+          Authenticating...
+        </span>
+      </button>
+    </form>
+
+    <div class="text-center text-xs text-slate-400">
+      Don't have an account? <a href="/register" class="text-blue-400 font-semibold hover:underline">Sign up for free</a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

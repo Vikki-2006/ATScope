@@ -1,0 +1,38 @@
+<div class="fixed bottom-5 right-5 z-50 space-y-3 pointer-events-none" x-data>
+  <template x-for="toast in $store.toast.toasts" :key="toast.id">
+    <div x-transition:enter="transition ease-out duration-300 transform"
+         x-transition:enter-start="opacity-0 translate-y-2 scale-95"
+         x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+         x-transition:leave="transition ease-in duration-200 transform"
+         x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+         x-transition:leave-end="opacity-0 translate-y-2 scale-95"
+         class="pointer-events-auto flex items-center p-4 rounded-xl shadow-2xl border backdrop-blur-md max-w-md"
+         :class="{
+           'bg-emerald-950/90 border-emerald-500/30 text-emerald-200': toast.type === 'success',
+           'bg-rose-950/90 border-rose-500/30 text-rose-200': toast.type === 'error',
+           'bg-indigo-950/90 border-indigo-500/30 text-indigo-200': toast.type === 'info'
+         }">
+      
+      <div class="mr-3">
+        <template x-if="toast.type === 'success'">
+          <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+          </svg>
+        </template>
+        <template x-if="toast.type === 'error'">
+          <svg class="w-5 h-5 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </template>
+      </div>
+
+      <div class="text-sm font-medium" x-text="toast.message"></div>
+
+      <button @click="$store.toast.remove(toast.id)" class="ml-auto text-slate-400 hover:text-white p-1">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+  </template>
+</div>

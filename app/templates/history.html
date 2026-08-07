@@ -1,0 +1,66 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Analysis History - ResumeAI Enterprise{% endblock %}
+
+{% block content %}
+<div class="space-y-6" x-data="{ search: '' }">
+  
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-800">
+    <div>
+      <h1 class="text-2xl font-bold text-white tracking-tight">Analysis & Audit History</h1>
+      <p class="text-xs text-slate-400 mt-0.5">Review candidate evaluation records, ATS scores, and download executive PDF reports.</p>
+    </div>
+
+    <!-- Search Input -->
+    <div class="relative w-full sm:w-64">
+      <input type="text" x-model="search" placeholder="Search position..."
+             class="w-full pl-8 pr-3 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-600">
+      <svg class="w-3.5 h-3.5 text-slate-500 absolute left-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+    </div>
+  </div>
+
+  <div class="ent-card overflow-hidden">
+    {% if analyses %}
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead class="text-slate-400 bg-slate-950/80 uppercase text-[10px] border-b border-slate-800">
+            <tr>
+              <th class="px-4 py-3">ID</th>
+              <th class="px-4 py-3">Target Position</th>
+              <th class="px-4 py-3">ATS Score</th>
+              <th class="px-4 py-3">Formatting</th>
+              <th class="px-4 py-3">Overall Match</th>
+              <th class="px-4 py-3">Date</th>
+              <th class="px-4 py-3 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800 text-slate-300">
+            {% for a in analyses %}
+              <tr class="hover:bg-slate-800/40"
+                  x-show="!search || '{{ a.job_title or '' }}'.toLowerCase().includes(search.toLowerCase())">
+                <td class="px-4 py-3 font-mono text-slate-500">#{{ a.id }}</td>
+                <td class="px-4 py-3 font-bold text-white">{{ a.job_title or 'General Role Audit' }}</td>
+                <td class="px-4 py-3">
+                  <span class="px-2 py-0.5 rounded font-bold text-[11px] {% if a.ats_score >= 80 %}bg-emerald-500/10 text-emerald-400{% else %}bg-amber-500/10 text-amber-400{% endif %}">
+                    {{ a.ats_score }}/100
+                  </span>
+                </td>
+                <td class="px-4 py-3 text-slate-400">{{ a.formatting_score }}%</td>
+                <td class="px-4 py-3 font-bold text-white">{{ a.overall_score }}%</td>
+                <td class="px-4 py-3 text-slate-500">{{ a.created_at.strftime('%b %d, %Y') }}</td>
+                <td class="px-4 py-3 text-right space-x-2">
+                  <a href="/analysis/{{ a.id }}" class="text-blue-400 font-semibold hover:underline">View Audit</a>
+                  <a href="/api/v1/analysis/{{ a.id }}/report/pdf" class="text-slate-400 hover:text-white font-medium">PDF</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="text-center py-12 text-xs text-slate-400">No analysis records stored yet.</div>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}User Profile - ResumeAI{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  
+  <div class="mb-8">
+    <h1 class="text-3xl font-extrabold text-white">Candidate Profile</h1>
+    <p class="text-slate-400 text-sm">Manage your account information and preferences</p>
+  </div>
+
+  <div class="glass-panel p-8 rounded-2xl border border-slate-800 shadow-2xl space-y-6">
+    <div class="flex items-center space-x-6 pb-6 border-b border-slate-800">
+      <div class="w-20 h-20 rounded-2xl gradient-bg flex items-center justify-center text-white text-3xl font-bold shadow-xl">
+        {{ user.full_name[0].upper() }}
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-white">{{ user.full_name }}</h2>
+        <p class="text-slate-400 text-sm">{{ user.email }}</p>
+        <span class="inline-block mt-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+          Pro Candidate Account
+        </span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+      <div class="glass-card p-5 rounded-xl border border-slate-800">
+        <div class="text-xs uppercase font-bold tracking-wider text-slate-400 mb-1">Account Created</div>
+        <div class="text-lg font-semibold text-white">{{ user.created_at.strftime('%B %d, %Y') }}</div>
+      </div>
+
+      <div class="glass-card p-5 rounded-xl border border-slate-800">
+        <div class="text-xs uppercase font-bold tracking-wider text-slate-400 mb-1">Account Status</div>
+        <div class="text-lg font-semibold text-emerald-400 flex items-center">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 mr-2"></span> Active
+        </div>
+      </div>
+    </div>
+
+    <div class="flex space-x-4 pt-4">
+      <a href="/settings" class="px-6 py-3 rounded-xl border border-slate-700 bg-slate-900 text-white font-semibold text-sm hover:bg-slate-800 transition-colors">
+        Edit Settings
+      </a>
+      <a href="/dashboard" class="px-6 py-3 rounded-xl gradient-bg text-white font-semibold text-sm shadow-lg shadow-indigo-500/25">
+        Back to Dashboard
+      </a>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
