@@ -85,59 +85,6 @@ def get_analysis_detail(
         raise HTTPException(status_code=404, detail="Analysis record not found")
     return analysis
 
-@router.get("/demo/report/pdf")
-def download_demo_pdf_report():
-    analysis_dict = {
-        "job_title": "Senior Software Engineer (Demo)",
-        "overall_score": 85.0,
-        "ats_score": 82.0,
-        "formatting_score": 90.0,
-        "readability_score": 88.0,
-        "keyword_match_score": 84.0,
-        "skill_match_score": 80.0,
-        "experience_score": 85.0,
-        "education_score": 95.0,
-        "project_score": 80.0,
-        "matched_skills": ["Python", "FastAPI", "React", "Docker", "PostgreSQL", "Git"],
-        "missing_skills": ["AWS", "Redis", "Kubernetes"],
-        "recommended_skills": ["GraphQL", "CI/CD"],
-        "suggestions_json": {
-            "formatting": ["Include contact links like LinkedIn and GitHub in a clear format.", "Avoid using complex column layouts that confuse older ATS parsers."],
-            "readability": ["Add more high-impact action verbs at the beginning of bullet points.", "Quantify achievements under Acme Corp experience section."],
-            "keywords": ["Incorporate 'AWS' or cloud deployment experience keywords.", "Include 'Redis' for caching context under projects section."]
-        }
-    }
-    pdf_bytes = ReportGenerator.generate_pdf_report(analysis_dict, "Demo Candidate")
-    return Response(
-        content=pdf_bytes,
-        media_type="application/pdf",
-        headers={"Content-Disposition": "attachment; filename=Demo_Resume_Analysis_Report.pdf"}
-    )
-
-@router.get("/demo/report/csv")
-def download_demo_csv_report():
-    analysis_dict = {
-        "job_title": "Senior Software Engineer (Demo)",
-        "overall_score": 85.0,
-        "ats_score": 82.0,
-        "formatting_score": 90.0,
-        "readability_score": 88.0,
-        "keyword_match_score": 84.0,
-        "skill_match_score": 80.0,
-        "experience_score": 85.0,
-        "education_score": 95.0,
-        "project_score": 80.0,
-        "matched_skills": ["Python", "FastAPI", "React", "Docker", "PostgreSQL", "Git"],
-        "missing_skills": ["AWS", "Redis", "Kubernetes"],
-        "recommended_skills": ["GraphQL", "CI/CD"]
-    }
-    csv_data = ReportGenerator.generate_csv_report(analysis_dict, "Demo Candidate")
-    return Response(
-        content=csv_data,
-        media_type="text/csv",
-        headers={"Content-Disposition": "attachment; filename=Demo_Resume_Analysis_Report.csv"}
-    )
-
 @router.get("/{analysis_id}/report/pdf")
 def download_pdf_report(
     analysis_id: int,
