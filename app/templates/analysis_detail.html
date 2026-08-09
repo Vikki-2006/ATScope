@@ -6,12 +6,12 @@
 <div class="space-y-6">
   
   <!-- Header Bar -->
-  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
     <div>
-      <div class="text-[11px] font-mono text-slate-400">
+      <div class="text-[11px] font-mono text-slate-500 dark:text-slate-400">
         Audit Record #{{ analysis.id }} • {{ analysis.created_at.strftime('%B %d, %Y') }}
       </div>
-      <h1 class="text-2xl font-bold text-white tracking-tight mt-0.5">
+      <h1 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mt-0.5">
         {{ analysis.job_title or 'General Technical Role Audit' }}
       </h1>
     </div>
@@ -23,7 +23,7 @@
         <span>Download PDF Report</span>
       </a>
       <a href="/api/v1/analysis/{{ analysis.id }}/report/csv" class="btn-secondary px-4 py-2 text-xs flex items-center space-x-2">
-        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        <svg class="w-4 h-4 text-emerald-500 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
         <span>Export CSV Data</span>
       </a>
     </div>
@@ -33,29 +33,29 @@
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
     
     <div class="ent-card p-5 border-blue-600/30">
-      <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Overall Match Score</div>
-      <div class="text-3xl font-bold text-white my-1">{{ analysis.overall_score }}%</div>
-      <span class="text-[11px] font-semibold text-blue-400">
+      <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Overall Match Score</div>
+      <div class="text-3xl font-bold text-slate-900 dark:text-white my-1">{{ analysis.overall_score }}%</div>
+      <span class="text-[11px] font-semibold text-blue-600 dark:text-blue-400">
         {% if analysis.overall_score >= 80 %}Optimal Candidate Fit{% else %}Needs Optimization{% endif %}
       </span>
     </div>
 
     <div class="ent-card p-5 border-emerald-600/30">
-      <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">ATS Score</div>
-      <div class="text-3xl font-bold text-white my-1">{{ analysis.ats_score }}/100</div>
-      <span class="text-[11px] text-slate-400">Parser Compatibility Rating</span>
+      <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">ATS Score</div>
+      <div class="text-3xl font-bold text-slate-900 dark:text-white my-1">{{ analysis.ats_score }}/100</div>
+      <span class="text-[11px] text-slate-500 dark:text-slate-400">Parser Compatibility Rating</span>
     </div>
 
     <div class="ent-card p-5">
-      <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Formatting Score</div>
-      <div class="text-3xl font-bold text-white my-1">{{ analysis.formatting_score }}%</div>
-      <span class="text-[11px] text-slate-400">Structure & Contact Info</span>
+      <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Formatting Score</div>
+      <div class="text-3xl font-bold text-slate-900 dark:text-white my-1">{{ analysis.formatting_score }}%</div>
+      <span class="text-[11px] text-slate-500 dark:text-slate-400">Structure & Contact Info</span>
     </div>
 
     <div class="ent-card p-5">
-      <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Readability Index</div>
-      <div class="text-3xl font-bold text-white my-1">{{ analysis.readability_score }}%</div>
-      <span class="text-[11px] text-slate-400">Metrics & Verb Density</span>
+      <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Readability Index</div>
+      <div class="text-3xl font-bold text-slate-900 dark:text-white my-1">{{ analysis.readability_score }}%</div>
+      <span class="text-[11px] text-slate-500 dark:text-slate-400">Metrics & Verb Density</span>
     </div>
 
   </div>
@@ -63,14 +63,14 @@
   <!-- Detailed Metric Charts Grid -->
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
     <div class="lg:col-span-6 ent-card p-6">
-      <h3 class="text-xs font-bold text-white uppercase tracking-wider mb-4">Category Score Breakdown</h3>
+      <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-4">Category Score Breakdown</h3>
       <div class="h-64 relative">
         <canvas id="detailScoreChart"></canvas>
       </div>
     </div>
 
     <div class="lg:col-span-6 ent-card p-6">
-      <h3 class="text-xs font-bold text-white uppercase tracking-wider mb-4">Candidate Radar Matrix</h3>
+      <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-4">Candidate Radar Matrix</h3>
       <div class="h-64 relative">
         <canvas id="detailRadarChart"></canvas>
       </div>
@@ -79,18 +79,18 @@
 
   <!-- Skill Matrix Section -->
   <div class="ent-card p-6 space-y-4">
-    <h3 class="text-xs font-bold text-white uppercase tracking-wider">Skill Matrix & Gap Analysis</h3>
+    <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Skill Matrix & Gap Analysis</h3>
     
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       
       <!-- Matched Skills -->
-      <div class="p-4 rounded-lg bg-slate-950/60 border border-slate-800">
-        <div class="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2.5">
+      <div class="p-4 rounded-lg bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800">
+        <div class="text-xs font-bold text-emerald-605 dark:text-emerald-400 uppercase tracking-wider mb-2.5">
           Matched Skills ({{ analysis.matched_skills|length }})
         </div>
         <div class="flex flex-wrap gap-1.5">
           {% for skill in analysis.matched_skills %}
-            <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
               {{ skill }}
             </span>
           {% else %}
@@ -100,13 +100,13 @@
       </div>
 
       <!-- Missing Skills -->
-      <div class="p-4 rounded-lg bg-slate-950/60 border border-slate-800">
-        <div class="text-xs font-bold text-rose-400 uppercase tracking-wider mb-2.5">
+      <div class="p-4 rounded-lg bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800">
+        <div class="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider mb-2.5">
           Missing Target Skills ({{ analysis.missing_skills|length }})
         </div>
         <div class="flex flex-wrap gap-1.5">
           {% for skill in analysis.missing_skills %}
-            <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-rose-500/10 text-rose-300 border border-rose-500/20">
+            <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-rose-500/10 text-rose-600 dark:text-rose-300 border border-rose-500/20">
               {{ skill }}
             </span>
           {% else %}
@@ -116,13 +116,13 @@
       </div>
 
       <!-- Recommended Additions -->
-      <div class="p-4 rounded-lg bg-slate-950/60 border border-slate-800">
-        <div class="text-xs font-bold text-blue-400 uppercase tracking-wider mb-2.5">
+      <div class="p-4 rounded-lg bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800">
+        <div class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-2.5">
           Recommended Additions
         </div>
         <div class="flex flex-wrap gap-1.5">
           {% for skill in analysis.recommended_skills %}
-            <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-blue-500/10 text-blue-300 border border-blue-500/20">
+            <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-blue-500/10 text-blue-600 dark:text-blue-300 border border-blue-500/20">
               + {{ skill }}
             </span>
           {% else %}
@@ -136,17 +136,17 @@
 
   <!-- AI Suggestions -->
   <div class="ent-card p-6 space-y-4">
-    <h3 class="text-xs font-bold text-white uppercase tracking-wider">Actionable Recommendations</h3>
+    <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Actionable Recommendations</h3>
 
     {% if analysis.suggestions_json %}
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         {% for cat_key, sug_list in analysis.suggestions_json.items() %}
           {% if sug_list %}
-            <div class="p-4 rounded-lg bg-slate-950/60 border border-slate-800 space-y-2">
-              <h4 class="text-xs font-bold text-blue-400 capitalize">
+            <div class="p-4 rounded-lg bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+              <h4 class="text-xs font-bold text-blue-600 dark:text-blue-400 capitalize">
                 {{ cat_key.replace('_', ' ') }}
               </h4>
-              <ul class="space-y-1.5 text-xs text-slate-300">
+              <ul class="space-y-1.5 text-xs text-slate-700 dark:text-slate-300">
                 {% for sug in sug_list %}
                   <li class="flex items-start">
                     <span class="text-blue-500 mr-2 font-bold">•</span>

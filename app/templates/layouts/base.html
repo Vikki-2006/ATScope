@@ -1,6 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" class="dark" x-data="enterpriseLayout()">
+<html lang="en" x-data="enterpriseLayout()">
 <head>
+  <script>
+    (function() {
+      const theme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.classList.add(theme);
+    })();
+  </script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}AI Resume Analyzer - Enterprise SaaS Platform{% endblock %}</title>
@@ -43,7 +50,7 @@
   <script src="/static/js/app.js"></script>
   <script src="/static/js/charts.js"></script>
 </head>
-<body class="bg-[#0F172A] text-slate-100 min-h-screen flex flex-col selection:bg-blue-600 selection:text-white transition-colors duration-200">
+<body class="min-h-screen flex flex-col selection:bg-blue-600 selection:text-white transition-colors duration-200">
 
   <!-- Toast Notification Overlay -->
   {% include 'components/toast.html' %}

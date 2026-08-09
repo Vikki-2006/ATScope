@@ -1,43 +1,43 @@
-<header class="sticky top-0 z-30 border-b border-slate-800/80 bg-slate-900/90 backdrop-blur-md">
+<header class="sticky top-0 z-30 border-b border-slate-200 dark:border-slate-800/80 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md">
   <div class="max-w-[1750px] mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-14">
       
       <!-- Left Controls: Sidebar Toggle & Search -->
       <div class="flex items-center space-x-4">
         {% if user %}
-          <button @click="toggleSidebar()" class="p-1.5 rounded-lg border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
+          <button @click="toggleSidebar()" class="p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
           </button>
 
           <div class="relative hidden sm:block w-64">
             <input type="text" placeholder="Search candidate records..."
-                   class="w-full pl-9 pr-3 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-600">
-            <svg class="w-3.5 h-3.5 text-slate-500 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                   class="w-full pl-9 pr-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-600">
+            <svg class="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
           </div>
         {% else %}
           <a href="/" class="flex items-center space-x-2">
             <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold">
               AI
             </div>
-            <span class="font-bold text-lg text-white">Resume<span class="text-blue-500">AI</span></span>
+            <span class="font-bold text-lg text-slate-900 dark:text-white">Resume<span class="text-blue-500">AI</span></span>
           </a>
         {% endif %}
       </div>
 
       <!-- Center Links for Logged Out Landing View -->
       {% if not user %}
-        <nav class="hidden md:flex items-center space-x-8 text-xs font-medium text-slate-400">
-          <a href="/#features" class="hover:text-white transition-colors">Features</a>
-          <a href="/#how-it-works" class="hover:text-white transition-colors">How It Works</a>
-          <a href="/#pricing" class="hover:text-white transition-colors">Pricing</a>
-          <a href="/#faq" class="hover:text-white transition-colors">FAQ</a>
+        <nav class="hidden md:flex items-center space-x-8 text-xs font-medium text-slate-500 dark:text-slate-400">
+          <a href="/#features" class="hover:text-slate-900 dark:hover:text-white transition-colors">Features</a>
+          <a href="/#how-it-works" class="hover:text-slate-900 dark:hover:text-white transition-colors">How It Works</a>
+          <a href="/#pricing" class="hover:text-slate-900 dark:hover:text-white transition-colors">Pricing</a>
+          <a href="/#faq" class="hover:text-slate-900 dark:hover:text-white transition-colors">FAQ</a>
         </nav>
       {% endif %}
 
       <!-- Right Controls -->
       <div class="flex items-center space-x-3">
         <!-- Theme Toggle -->
-        <button @click="toggleTheme()" class="p-1.5 rounded-lg border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
+        <button @click="toggleTheme()" class="p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
           <svg x-show="theme === 'dark'" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
           <svg x-show="theme === 'light'" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
         </button>
@@ -48,7 +48,7 @@
             <span>New Analysis</span>
           </a>
         {% else %}
-          <a href="/login" class="text-xs font-semibold text-slate-300 hover:text-white px-3 py-1.5">Sign In</a>
+          <a href="/login" class="text-xs font-semibold text-slate-650 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white px-3 py-1.5">Sign In</a>
           <a href="/register" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700 transition-colors">
             Get Started
           </a>

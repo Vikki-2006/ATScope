@@ -36,6 +36,9 @@ document.addEventListener('alpine:init', () => {
             localStorage.setItem('theme', this.theme);
             this.applyTheme();
             
+            // Dispatch event for charts to adapt
+            window.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme: this.theme } }));
+            
             // Sync with backend API
             fetch('/api/v1/user/settings', {
                 method: 'PUT',

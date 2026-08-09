@@ -4,21 +4,47 @@
 :root {
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-heading: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
-  
-  --bg-dark: #0F172A;
-  --card-dark: #111827;
-  --border-dark: #1F2937;
-  --primary-blue: #2563EB;
+}
+
+html.dark {
+  --bg-color: #0F172A;
+  --card-bg: #111827;
+  --border-color: #1F2937;
   --text-main: #F8FAFC;
   --text-muted: #94A3B8;
+  --sidebar-bg: #0B0F19;
+  --btn-secondary-bg: #1E293B;
+  --btn-secondary-border: #334155;
+  --btn-secondary-hover: #334155;
+  --card-hover-border: #374151;
+  --scrollbar-track: #0F172A;
+  --scrollbar-thumb: #1F2937;
+  --scrollbar-thumb-hover: #374151;
+}
+
+html.light {
+  --bg-color: #F8FAFC;
+  --card-bg: #FFFFFF;
+  --border-color: #E2E8F0;
+  --text-main: #0F172A;
+  --text-muted: #64748B;
+  --sidebar-bg: #FFFFFF;
+  --btn-secondary-bg: #F1F5F9;
+  --btn-secondary-border: #CBD5E1;
+  --btn-secondary-hover: #E2E8F0;
+  --card-hover-border: #CBD5E1;
+  --scrollbar-track: #F8FAFC;
+  --scrollbar-thumb: #CBD5E1;
+  --scrollbar-thumb-hover: #94A3B8;
 }
 
 body {
   font-family: var(--font-sans);
-  background-color: var(--bg-dark);
+  background-color: var(--bg-color);
   color: var(--text-main);
   overflow-x: hidden;
   letter-spacing: -0.01em;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -28,37 +54,38 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Enterprise Clean Card */
 .ent-card {
-  background-color: var(--card-dark);
-  border: 1px solid var(--border-dark);
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .ent-card:hover {
-  border-color: #374151;
+  border-color: var(--card-hover-border);
 }
 
 /* Enterprise Sidebar */
 .ent-sidebar {
-  background-color: #0B0F19;
-  border-right: 1px solid var(--border-dark);
+  background-color: var(--sidebar-bg);
+  border-right: 1px solid var(--border-color);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
 .ent-nav-item {
   display: flex;
-  items-center: center;
+  align-items: center;
   padding: 0.5rem 0.75rem;
   border-radius: 8px;
-  color: #94A3B8;
+  color: var(--text-muted);
   font-size: 0.875rem;
   font-weight: 500;
   transition: all 0.15s ease;
 }
 
 .ent-nav-item:hover {
-  color: #F8FAFC;
-  background-color: #1E293B;
+  color: var(--text-main);
+  background-color: var(--btn-secondary-bg);
 }
 
 .ent-nav-item.active {
@@ -81,16 +108,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-secondary {
-  background-color: #1E293B;
-  color: #F8FAFC;
-  border: 1px solid #334155;
+  background-color: var(--btn-secondary-bg);
+  color: var(--text-main);
+  border: 1px solid var(--btn-secondary-border);
   font-weight: 500;
   border-radius: 8px;
-  transition: background-color 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
 .btn-secondary:hover {
-  background-color: #334155;
+  background-color: var(--btn-secondary-hover);
 }
 
 .btn-success {
@@ -98,6 +125,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #FFFFFF;
   font-weight: 600;
   border-radius: 8px;
+  transition: background-color 0.15s ease;
 }
 
 .btn-success:hover {
@@ -109,6 +137,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #FFFFFF;
   font-weight: 600;
   border-radius: 8px;
+  transition: background-color 0.15s ease;
 }
 
 .btn-warning:hover {
@@ -120,6 +149,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #FFFFFF;
   font-weight: 600;
   border-radius: 8px;
+  transition: background-color 0.15s ease;
 }
 
 .btn-danger:hover {
@@ -133,16 +163,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0F172A;
+  background: var(--scrollbar-track);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1F2937;
+  background: var(--scrollbar-thumb);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #374151;
+  background: var(--scrollbar-thumb-hover);
 }
 
 [x-cloak] {
