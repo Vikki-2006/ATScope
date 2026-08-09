@@ -16,8 +16,9 @@ from app.views.resume import router as resume_views
 from app.views.history import router as history_views
 from app.views.settings import router as settings_views
 
-# Initialize Database Tables
-Base.metadata.create_all(bind=engine)
+# Initialize Database Tables (Local development fallback)
+if not os.getenv("VERCEL"):
+    Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
