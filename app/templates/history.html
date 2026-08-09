@@ -14,7 +14,7 @@
     <!-- Search Input -->
     <div class="relative w-full sm:w-64">
       <input type="text" x-model="search" placeholder="Search position..."
-             class="w-full pl-8 pr-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-600">
+             class="w-full pl-8 pr-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-white placeholder-slate-450 dark:placeholder-slate-500 focus:outline-none focus:border-blue-600">
       <svg class="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 absolute left-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
     </div>
   </div>
@@ -49,7 +49,7 @@
                 <td class="px-4 py-3 font-bold text-slate-900 dark:text-white">{{ a.overall_score }}%</td>
                 <td class="px-4 py-3 text-slate-400 dark:text-slate-500">{{ a.created_at.strftime('%b %d, %Y') }}</td>
                 <td class="px-4 py-3 text-right space-x-2">
-                  <a href="/analysis/{{ a.id }}" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">View Audit</a>
+                  <a href="/analysis/{{ a.id }}" class="text-blue-650 dark:text-blue-400 font-semibold hover:underline">View Audit</a>
                   <a href="/api/v1/analysis/{{ a.id }}/report/pdf" class="text-slate-500 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white font-medium">PDF</a>
                 </td>
               </tr>
