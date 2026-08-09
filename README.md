@@ -64,7 +64,19 @@ A production-grade, commercial-quality **AI Resume Analyzer and ATS Optimization
 - **ReportLab**: Executive PDF report generation.
 
 ---
+## 🚀 Live Demo
 
+<p align="center">
+  <a href="https://atscope-analyzer.vercel.app/" target="_blank">
+    <img src="https://img.shields.io/badge/🚀%20Live%20Demo-Visit%20ATSCope-00C853?style=for-the-badge" alt="Live Demo">
+  </a>
+</p>
+
+<p align="center">
+  <b>Try ATScope AI Resume Analyzer online</b>
+</p>
+
+---
 ## System Architecture
 
 ```
