@@ -68,7 +68,7 @@ A production-grade, commercial-quality **AI Resume Analyzer and ATS Optimization
 
 <p align="center">
   <a href="https://atscope-analyzer.vercel.app/" target="_blank">
-    <img src="https://img.shields.io/badge/🚀%20Live%20Demo-Visit%20ATSCope-00C853?style=for-the-badge" alt="Live Demo">
+    <img src="https://img.shields.io/badge/%20Live%20Demo-Visit%20ATSCope-00C853?style=for-the-badge" alt="Live Demo">
   </a>
 </p>
 
