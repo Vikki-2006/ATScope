@@ -5,7 +5,6 @@
 
 
 
-
 # AI Resume Analyzer - SaaS Platform
 
 A production-grade, commercial-quality **AI Resume Analyzer and ATS Optimization** platform built with Python, FastAPI, SQLAlchemy, Jinja2, Tailwind CSS, Alpine.js, Chart.js, spaCy, and scikit-learn.
